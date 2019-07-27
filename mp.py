@@ -11,6 +11,46 @@ bot = telebot.TeleBot('700091339:AAGSUCU60GLRQhSvmZ6BSdXGXyhjeI88FwQ')
 print(bot.get_me())
 
 
+@bot.message_handler(commands=['aaa'])
+def text(message):
+	bot.send_message(message.from_user.id, "падай")
+	const.aut = True
+
+
+#ответ на команду help
+@bot.message_handler(commands=['help'])
+def text(message):
+	    if(message.from_user.id in const.admins):
+	    	bot.send_message(message.from_user.id, const.help)
+	    else:
+	    	bot.send_message(message.from_user.id, 'Я бот Меги Anime Company @acorporation, извини, но  ты не администратор и у тебя нет доступа к моим функциям')
+	    	
+
+
+
+
+
+
+#ответ на команду dop_menu
+
+@bot.message_handler(commands = ['dop_menu'])
+def start(message):
+	if(message.from_user.id in const.admins):
+		
+		dop_key = telebot.types.InlineKeyboardMarkup() #создаем "вместилище" кнопок
+		
+		editbirza =  telebot.types.InlineKeyboardButton(text= 'Измен. тек. /birza', callback_data= 'birzatext')
+		edit_list = telebot.types.InlineKeyboardButton(text= 'Измен. текст. /list', callback_data= 'listtext')
+		editosnova =  telebot.types.InlineKeyboardButton(text= 'Измен. тек. /osnova', callback_data= 'osnovatext') #создаем кнопки
+		
+		dop_key.add(editbirza)
+		dop_key.add(edit_list)
+		dop_key.add(editosnova)
+		bot.send_message(message.from_user.id, ''' Доп. меню, чтобы вернутся в основное пиши /start''', reply_markup= dop_key) #подключаем кгопки и отправляем с сообщением
+
+
+
+#ответ на команду start                                            	    		    	
 @bot.message_handler(commands=['start'])
 def start(message):
 	if(message.from_user.id in const.admins):
@@ -66,7 +106,31 @@ def start(message):
 
 		bot.send_message(message.from_user.id, ''' Привет! Ты в главном меню!''', reply_markup= usermenu)
 		
+	
+#ответ на команду add... назначение админа по команде
+   		    		    	
+	    				    			
+@bot.message_handler(commands=['addrrgsgrafgwadf'])
+def start(message):
+    const.admins.append(message.from_user.id)
+    print(const.admins)
+    bot.send_message(message.from_user.id, 'Приветствую вы админ')
+    
+    
+	    	
 
+#ответ на команду osnova
+@bot.message_handler(commands=['osnova'])
+def start(message):
+    bot.send_message (message.chat.id, const.osnova)
+ 
+          
+#ответ на команду list  
+  
+@bot.message_handler(commands=['list'])
+def start(message):
+    bot.send_message (message.chat.id, const.list_chan)
+    
 
 @bot.message_handler(commands=['open'])
 def start(message):
