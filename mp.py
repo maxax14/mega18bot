@@ -196,7 +196,7 @@ def start(message):
         else:
         	
         	
-            f = const.setings['Гиф_меги'] + const.setings['Заголовок'] + "\n" + const.ch + "\n"
+            f = const.setings['Гиф_меги'] + const.setings['Заголовок'] + "\n" + "\n" + const.ch + "\n"
             for innt in const.megaac:
             
                 f = f  + str(innt)  + "\n"
