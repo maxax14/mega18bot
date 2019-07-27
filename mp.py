@@ -166,7 +166,8 @@ def start(message):
         const.megaac = []
         const.setings['close_id'] = message.message_id
         
-
+        
+        
         
         #выше запоминаем айди закрытия
         
@@ -180,7 +181,7 @@ def start(message):
         
         
             try:
-                mes = bot.forward_message(-1001265366993, message.chat.id, d)
+                mes = bot.forward_message(-1001196847827, message.chat.id, d)
             except telebot.apihelper.ApiException:
                 pass
             if (mes.text != ''):
@@ -199,18 +200,60 @@ def start(message):
             f = const.setings['Гиф_меги'] + const.setings['Заголовок'] + "\n" + "\n"+ const.ch + "\n" + "\n"
             for innt in const.megaac:
             
-                f = f  + "•••" str(innt)  + "\n"
+                f = f  + str(innt)  + "\n"
             else:
                 bot.send_message(message.chat.id, f + "\n" + "\n" + const.ch + "\n" + '\n' + const.setings['Окончание'] + "\n", parse_mode='Markdown')
+
                 		
                 
                                                 
 #сообщение готовности
                 
                 bot.send_message(message.chat.id, const.setings['Готовность'], parse_mode='Markdown')
-# тут подключены основные кнопки    	
-@bot.callback_query_handler(func=lambda call: True)
-def call_buton(call):
+                bot.send_message(message.chat.id, '''Каналов в меге: {ch}'''.format(ch = len(const.megaac)))
+                
+                	
+            
+                                    
+#вытягиваем юзер и отправляем                
+                
+                for huinya in const.megaac:
+                	chuser = re.findall(r'\(.+?\.me/(.+?)\)', huinya)
+                	         	
+                	aaa = "@{ch}".format(ch = chuser[0])
+                	
+                	
+                	try:
+                		bot.send_message(aaa, f + "\n" + "\n" + const.ch + "\n" + '\n' + const.setings['Окончание'] + "\n", parse_mode='Markdown')
+                		bot.send_message(message.from_user.id,  '''Каналов в меге: {kolvo}
+Мега разослана на: {razos}
+Попыток сделано: {kolvo}'''.format(kolvo = len(const.megaac), razos = len(chuser)))
+                		
+                		
+    		            		              		            		              		
+                	except telebot.apihelper.ApiException as exc:
+                		print('SYSTEM ERROR')
+                	
+	 
+
+	 
+	 
+
+                
+                                                
+# закрепляем и выводим колво каналов   
+
+                          
+                bot.pin_chat_message(message.chat.id, message.message_id +3)
+
+                
+          
+
+
+    else:
+    	bot.send_message(message.chat.id, 'шота нитак')
+
+  
 	
 #кнопка сведения
 	
