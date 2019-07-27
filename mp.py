@@ -196,13 +196,12 @@ def start(message):
         else:
         	
         	
-            f = const.setings['Гиф_меги'] + const.setings['Заголовок'] + "\n" + "\n" + const.ch + "\n" + "\n"
+            f = const.setings['Гиф_меги'] + const.setings['Заголовок'] + "\n" + "\n"+ const.ch + "\n" + "\n"
             for innt in const.megaac:
             
-                f = f  + str(innt)  + "\n"
+                f = f  + "•••" str(innt)  + "\n"
             else:
-                bot.send_message(message.chat.id,  + f + "\n" + "\n" + const.ch + "\n" + "\n" + const.setings['Окончание'] + "\n", parse_mode='Markdown')
-
+                bot.send_message(message.chat.id, f + "\n" + "\n" + const.ch + "\n" + '\n' + const.setings['Окончание'] + "\n", parse_mode='Markdown')
                 		
                 
                                                 
@@ -503,10 +502,7 @@ def text(message):
         
         
         bot.send_message(message.from_user.id , 'Нового администратора добавлено\nID:' + str(message.forward_from.id) + '\nUsername: @' + str(message.forward_from.username) + '\nName: ' + str(message.forward_from.first_name))
-        edit_seting()
-
-        write_log('Adding new admin: {add}. By adding {by}. '.format(add = str(message.forward_from.username), by = str(message.forward_from.username)))
-        
+    
         
         const.addadmin = False
 
