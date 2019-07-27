@@ -1,3 +1,5 @@
+bot_version = "2.0"
+
 import telebot
 import pickle
 import re
@@ -7,8 +9,11 @@ import os
 import math
 
 import const
-bot = telebot.TeleBot('700091339:AAGSUCU60GLRQhSvmZ6BSdXGXyhjeI88FwQ')
+bot = telebot.TeleBot('700091339:AAFJ8tpUnggq8lqfxCCJGt0_VLH-QMvVEIQ')
 print(bot.get_me())
+
+
+
 
 
 @bot.message_handler(commands=['aaa'])
@@ -131,11 +136,27 @@ def start(message):
 def start(message):
     bot.send_message (message.chat.id, const.list_chan)
     
+    
+@bot.message_handler(commands=['add_auto'])
+def start(message):
+	bot.send_message (message.from_user.id, '''' Привет, я бот меги @acorporation!
+	если ты ховешь подать заявку в автоподачу нажми ниже!''')
+	const.aut = True
+
+  
+ #ответ на команду birza 
+ 
+@bot.message_handler(commands=['birza'])
+def start(message):
+    bot.send_message (message.chat.id, const.birza , parse_mode = 'Markdown')
+
+
+#ответ на команду open
 
 @bot.message_handler(commands=['open'])
 def start(message):
     if(message.from_user.id in const.admins):
-        const.setings['open_id'] = message.message_id
+        const.setings['open_id'] = message.message_id 
         
 # выше запоминаем айди открытия        
        
@@ -181,7 +202,7 @@ def start(message):
         
         
             try:
-                mes = bot.forward_message(-1001196847827, message.chat.id, d)
+                mes = bot.forward_message(-1001265366993, message.chat.id, d)
             except telebot.apihelper.ApiException:
                 pass
             if (mes.text != ''):
@@ -254,6 +275,14 @@ def start(message):
     	bot.send_message(message.chat.id, 'шота нитак')
 
   
+  
+  
+   
+  
+    	   	
+# тут подключены основные кнопки    	
+@bot.callback_query_handler(func=lambda call: True)
+def call_buton(call):
 	
 #кнопка сведения
 	
@@ -340,12 +369,8 @@ def start(message):
 		bot.send_message(call.from_user.id, 'Пришли текст для команды /list')
 		const.lister = True
 		
-	
-	if(call.data == 'startp'):
-		start =  telebot.types.InlineKeyboardButton(text= 'Начать✨', callback_data= 'startp')
-		bot.edit_message_text('Меню',call.from_user.id, call.message.message_id , reply_markup=start)
-		const.startp = True
-
+		
+		
 		
 #кнопка редакт. тек. osnova		
 						
@@ -399,7 +424,6 @@ def start(message):
 
 @bot.message_handler(content_types=['text'])
 def text(message):
-	
 
         
         
@@ -442,6 +466,9 @@ def text(message):
         bot.send_message(message.from_user.id,'Изменения приняты.')
         bot.send_message(message.from_user.id, 'Заголовок меги:\n' + str(const.setings['Заголовок']) + '\n\nОкончание меги:\n' + str(const.setings['Окончание']) + '\n\nТекст открытия сбора:\n' + const.setings['Открытие'] +'\n\nТекст закрытия сбора:\n' + const.setings['Закрытие'] + '\n\nТекст готовности меги:\n' + const.setings['Готовность'])
         
+
+        
+
         const.cl = False          
 
  
@@ -492,7 +519,7 @@ def text(message):
 
         const.verh = False
 
-		
+
 
 
 #редактируем соб. на комм. birza
@@ -521,7 +548,72 @@ def text(message):
         bot.send_message(message.from_user.id,'Изменения приняты.')
         
         const.osn = False
+#автоподача
+        
+    if(const.aut == True):
+    	mes = message.text
+    	acmeg = re.findall(r'\[.+\]\(.+?\.me/.+?\)', mes)
+    	try:
+    		for ms in acmeg:
+    			if  ms not in const.autt:
+    				
+    				const.autt.append(ms)
+    				
+    				
+    				bot.send_message(message.from_user.id,  '''Канал 
+    				
+    				{ch} 
+    				
+    				добавлен'''.format(ch = ms))
+    				
+    		
+    				const.aut = False
+    				
+    					
+    				
+    				
 
+
+    	
+    			elif  ms  in const.autt:
+    				bot.send_message(message.from_user.id, "Этот канал уже добавлен в автоподачу")
+    				const.aut = False
+    				pass
+    			
+    	except:
+    		const.aut = False
+    		pass
+    		
+    if(const.dell == True):
+    	mee = message.text
+    	acm = re.findall(r'\[.+\]\(.+?\.me/.+?\)', mee)
+    	try:
+    		for mis in acm:
+    			if mis in const.autt:
+    				const.autt.remove(mis)
+    				bot.send_message(message.from_user.id, '''заявка 
+    				
+    				{m} 
+    				
+    				удалена'''.format(m = mis))
+    			
+    				const.dell = False
+    				
+    				
+    		
+    			elif  mis  not in const.autt:
+    				bot.send_message(message.from_user.id, "Я не нашел такой заявки")
+    				const.dell = False
+    				pass
+    				
+    			elif const.autt == []:
+    				bot.send_message(message.from_user.id, "Нечего удалять")
+    				const.dell = False			
+    		
+    	except:
+    		const.dell = False
+    		pass   			
+	    			
  		
                           
 # редактируем канал в меге
@@ -545,14 +637,14 @@ def text(message):
         
         
         bot.send_message(message.from_user.id , 'Нового администратора добавлено\nID:' + str(message.forward_from.id) + '\nUsername: @' + str(message.forward_from.username) + '\nName: ' + str(message.forward_from.first_name))
-    
+        
         
         const.addadmin = False
 
-                                    
 
-
+        	
+            	          	          	          	
+bot.polling(none_stop=True)
+            	
   
-bot.polling(none_stop = True)  
-  
-   
+         
