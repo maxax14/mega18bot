@@ -54,7 +54,18 @@ def start(message):
     /dop_menu - доп меню
 	/start - вызвать клавиатуру
 	/clear - очистить список автоподачи''', reply_markup= stop_key)
+	
+	else:
+		
+		usermenu = telebot.types.InlineKeyboardMarkup()
+		addauto =  telebot.types.InlineKeyboardButton(text= 'Добавить канал', callback_data= 'add')
+		delete =  telebot.types.InlineKeyboardButton(text= 'Удалить канал', callback_data= 'delete')
+		
+		usermenu.add(addauto)
+		usermenu.add(delete)
 
+		bot.send_message(message.from_user.id, ''' Привет! Ты в главном меню!''', reply_markup= usermenu)
+		
 
 
 @bot.message_handler(commands=['open'])
