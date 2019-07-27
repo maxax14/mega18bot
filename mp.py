@@ -201,7 +201,7 @@ def start(message):
             
                 f = f  + str(innt)  + "\n"
             else:
-                bot.send_message(message.chat.id, f + "\n" + const.ch + "\n" + const.setings['Окончание'] + "\n", parse_mode='Markdown')
+                bot.send_message(message.chat.id, "\n" + f + "\n" + "\n" + const.ch + "\n" + const.setings['Окончание'] + "\n", parse_mode='Markdown')
 
                 		
                 
