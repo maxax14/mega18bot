@@ -9,7 +9,7 @@ import os
 import math
 
 import const
-bot = telebot.TeleBot('700091339:AAFJ8tpUnggq8lqfxCCJGt0_VLH-QMvVEIQ')
+bot = telebot.TeleBot('822808838:AAEaBk_euGNqiMf7DCB1hddkuMZW77q_1lM')
 print(bot.get_me())
 
 
@@ -202,7 +202,7 @@ def start(message):
         
         
             try:
-                mes = bot.forward_message(-1001265366993, message.chat.id, d)
+                mes = bot.forward_message(-1001196847827, message.chat.id, d)
             except telebot.apihelper.ApiException:
                 pass
             if (mes.text != ''):
